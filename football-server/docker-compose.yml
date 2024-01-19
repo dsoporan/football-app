@@ -1,0 +1,32 @@
+version: "3.9"
+
+services:
+#  node_app:
+#    container_name: node_app
+#    build: .
+#    image: football/node_live_app
+#    ports:
+#      - "1337:1337"
+#    environment:
+#      - PG_DB=football_db
+#      - PG_USER=postgres
+#      - PG_PASSWORD=12345
+#      - PG_HOST=football_container
+#    restart: always
+#    depends_on:
+#      - football_container
+
+  football_container:
+    container_name: football_container
+    image: postgres:16
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=football_db
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=12345
+    volumes:
+      - node_db_data:/var/lib/postgresql/football-data2
+
+volumes:
+  node_db_data: {}
