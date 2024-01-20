@@ -15,10 +15,12 @@ export const populatePlayers = async (db) => {
     for (const playerElement of jsonResponse.response) {
       const isPlayerPopulated = await Player.findByPk(playerElement.player.id);
       if (!isPlayerPopulated) {
-        const teamExists = Team.findByPk(playerElement.statistics?.[0].team.id);
+        const teamExists = await Team.findByPk(
+          playerElement.statistics?.[0].team.id,
+        );
         await Player.create({
           ...buildBody(playerElement.player),
-          team_players: !teamExists
+          team_players: teamExists
             ? playerElement.statistics?.[0].team.id
             : null,
         });

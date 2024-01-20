@@ -77,8 +77,8 @@ db.favouritePlayers.belongsTo(db.players, {
 
 if (process.env.POPULATE_DB === "true") {
   await populateTeamsWithVenues(db);
-  await populatePlayers(db);
   await populateCoaches(db);
+  await populatePlayers(db);
 }
 
 export default db;
