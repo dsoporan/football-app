@@ -53,6 +53,6 @@ export const playerValidator = [
 ];
 
 export const favouritePlayerValidator = [
-  body("player_id", "Player ID shouldn't be empty").not().isEmpty(),
+  body("player_id", "player_id shouldn't be empty").not().isEmpty(),
   body("player_id", "Invalid Player ID, must be alphanumeric").isAlphanumeric(),
 ];

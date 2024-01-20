@@ -22,7 +22,7 @@
     "server": "nodemon index.js",
     "lint": "npx eslint *.js",
     "lint:fix": "npx eslint *.js --fix",
-    "test": "mocha --reporter spec"
+    "test": "mocha ./test/*.spec.js"
   },
   "keywords": [],
   "author": "",

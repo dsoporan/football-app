@@ -35,11 +35,23 @@ describe("Venue", () => {
       });
     });
 
+    it("/POST - it should NOT create a venue since body is invalid", (done) => {
+      server
+        .post("/api/venues/create")
+        .send({ ...venue, image: 123 })
+        .end((err, res) => {
+          expect(res.body.errors[0]).to.deep.include({
+            msg: "Invalid image, must be string",
+          });
+          expect(res.status).to.equal(422);
+          done();
+        });
+    });
+
     it("/POST - it should create a venue", (done) => {
       server
         .post("/api/venues/create")
         .send(venue)
-        .expect(200)
         .end((err, res) => {
           expect(res.status).to.equal(201);
           done();
@@ -47,13 +59,20 @@ describe("Venue", () => {
     });
 
     it("/GET - it should GET all the venues", (done) => {
+      server.get("/api/venues").end((err, res) => {
+        const venueFound = res.body.venues.find((x) => x.id === venue.id);
+        expect(venueFound).to.deep.include(venue);
+        expect(res.status).to.equal(200);
+        done();
+      });
+    });
+
+    it("/POST - it should NOT create a venue since it exists already", (done) => {
       server
-        .get("/api/venues")
-        .expect(200)
+        .post("/api/venues/create")
+        .send(venue)
         .end((err, res) => {
-          const venueFound = res.body.venues.find((x) => x.id === venue.id);
-          expect(venueFound).to.deep.include(venue);
-          expect(res.status).to.equal(200);
+          expect(res.status).to.equal(400);
           done();
         });
     });

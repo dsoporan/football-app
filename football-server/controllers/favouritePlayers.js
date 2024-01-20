@@ -3,6 +3,7 @@ import { buildBody } from "../utils/buildBody.js";
 import { validationResult } from "express-validator";
 
 const FavouritePlayer = db.favouritePlayers;
+const Player = db.players;
 
 //get all favourite players
 export const getFavouritePlayers = (req, res) => {
@@ -17,10 +18,11 @@ export const getFavouritePlayers = (req, res) => {
 export const createFavouritePlayer = async (req, res) => {
   const errors = validationResult(req);
   if (errors.isEmpty()) {
-    const isPlayerPopulated = await FavouritePlayer.findByPk(
+    const isFavouritePlayerPopulated = await FavouritePlayer.findByPk(
       req.body.player_id,
     );
-    if (!isPlayerPopulated) {
+    const isPlayerPopulated = await Player.findByPk(req.body.player_id);
+    if (isPlayerPopulated && !isFavouritePlayerPopulated) {
       FavouritePlayer.create({
         ...buildBody(req.body),
       })
@@ -35,6 +37,11 @@ export const createFavouritePlayer = async (req, res) => {
           res.status(500).json({ errors: err });
         });
     } else {
+      if (!isPlayerPopulated) {
+        return res
+          .status(400)
+          .json({ errors: "Player not exists with that ID." });
+      }
       res
         .status(400)
         .json({ errors: "Favourite player already exists with that ID." });

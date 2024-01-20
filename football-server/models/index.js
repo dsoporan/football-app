@@ -42,7 +42,7 @@ db.venues = Venue(sequelize);
 db.favouritePlayers = FavouritePlayer(sequelize);
 
 db.sequelize
-  .sync({ force: true })
+  .sync({ force: process.env.POPULATE_DB === "true" })
   .then(() => {
     console.log("DB synced");
   })
