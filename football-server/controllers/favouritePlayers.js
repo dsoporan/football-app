@@ -30,7 +30,7 @@ export const createFavouritePlayer = async (req, res) => {
           console.log("Favourite Player Created");
           res.status(201).json({
             message: "Favourite Player created successfully!",
-            coach: result,
+            favouritePlayer: result,
           });
         })
         .catch((err) => {
