@@ -9,10 +9,13 @@ import {
   useRemoveFavouritePlayer,
 } from "./queries/FavouritePlayers";
 import { useGetAllPlayers } from "./queries/Players";
+import LoadingOverlay from "react-loading-overlay-ts";
+import { Snackbar } from "@mui/material";
 
 function App() {
   const [activeTeam, setActiveTeam] = useState({});
   const [favouritePlayers, setFavouritePlayers] = useState([]);
+  const [errorOpen, setErrorOpen] = useState(false);
   const {
     isLoading: isLoadingTeams,
     isError: isErrorTeams,
@@ -43,6 +46,14 @@ function App() {
     }
   }, [isLoadingPlayers, isErrorPlayers, dataPlayers]);
 
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setErrorOpen(false);
+  };
+
   const initialValues = {
     teams,
     players,
@@ -55,6 +66,12 @@ function App() {
   };
 
   useEffect(() => {
+    if (isErrorTeams || isErrorTeams || isErrorPlayers) {
+      setErrorOpen(true);
+    }
+  }, [isErrorPlayers, isErrorFavouritePlayers, isErrorTeams]);
+
+  useEffect(() => {
     if (!isLoadingFavouritePlayers && !isErrorFavouritePlayers) {
       setFavouritePlayers(dataFavouritePlayers.favouritePlayers);
     }
@@ -63,9 +80,24 @@ function App() {
     isErrorFavouritePlayers,
     dataFavouritePlayers,
   ]);
+
   return (
     <div className="App">
       <DataContext.Provider value={initialValues}>
+        {(isLoadingPlayers || isLoadingTeams || isLoadingFavouritePlayers) && (
+          <LoadingOverlay
+            className="loading-overlay"
+            active={true}
+            spinner
+            text="Loading..."
+          />
+        )}
+        <Snackbar
+          autoHideDuration={6000}
+          open={errorOpen}
+          onClose={handleClose}
+          message="ERROR: Check your network"
+        />
         <Home />
       </DataContext.Provider>
     </div>
