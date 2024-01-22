@@ -5,6 +5,7 @@ import { Typography } from "@mui/material";
 import { TeamDetails } from "../teamDetails/TeamDetails";
 import { PlayerList } from "../playerList/PlayerList";
 import { CoachList } from "../coachList/CoachList";
+import { FavouritePlayerList } from "../FavouritePlayersList/FavouritePlayersList";
 
 export const Home = () => {
   return (
@@ -18,6 +19,7 @@ export const Home = () => {
         <TeamDetails />
         <PlayerList />
         <CoachList />
+        <FavouritePlayerList />
       </LayoutContainer>
     </>
   );

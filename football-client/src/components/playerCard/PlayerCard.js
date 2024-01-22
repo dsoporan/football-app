@@ -35,7 +35,7 @@ export const PlayerCard = ({ player, isCoach = false }) => {
   };
   return (
     <CardContainer isCoach={isCoach}>
-      <Badge src={activeTeam.logo} alt={activeTeam.name} />
+      <Badge src={player?.team?.logo} alt={activeTeam.name} />
       <Typography
         sx={{
           position: "absolute",

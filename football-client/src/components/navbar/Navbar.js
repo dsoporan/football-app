@@ -5,7 +5,11 @@ export const Navbar = () => {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
-          <Typography variant="h6" sx={{ textAlign: "left" }}>
+          <Typography
+            data-testid="navbar-title"
+            variant="h6"
+            sx={{ textAlign: "left" }}
+          >
             Football APP
           </Typography>
         </Toolbar>

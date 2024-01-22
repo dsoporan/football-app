@@ -17,7 +17,7 @@ export const TeamDetails = () => {
   return (
     <>
       {activeTeam?.id && (
-        <TeamDetailsContainer>
+        <TeamDetailsContainer data-testid="team-details-container">
           <Typography variant="h6" sx={{ width: "100%" }}>
             Details regarding {activeTeam.name} in 2022 Season
           </Typography>

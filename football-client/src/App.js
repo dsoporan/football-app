@@ -8,6 +8,7 @@ import {
   useGetAllFavouritePlayers,
   useRemoveFavouritePlayer,
 } from "./queries/FavouritePlayers";
+import { useGetAllPlayers } from "./queries/Players";
 
 function App() {
   const [activeTeam, setActiveTeam] = useState({});
@@ -17,6 +18,11 @@ function App() {
     isError: isErrorTeams,
     data: dataTeams,
   } = useGetAllTeams();
+  const {
+    isLoading: isLoadingPlayers,
+    isError: isErrorPlayers,
+    data: dataPlayers,
+  } = useGetAllPlayers();
   const {
     isLoading: isLoadingFavouritePlayers,
     isError: isErrorFavouritePlayers,
@@ -31,8 +37,15 @@ function App() {
     }
   }, [isLoadingTeams, isErrorTeams, dataTeams]);
 
+  const players = useMemo(() => {
+    if (!isLoadingPlayers && !isErrorPlayers) {
+      return dataPlayers.players;
+    }
+  }, [isLoadingPlayers, isErrorPlayers, dataPlayers]);
+
   const initialValues = {
     teams,
+    players,
     activeTeam,
     setActiveTeam,
     favouritePlayers,

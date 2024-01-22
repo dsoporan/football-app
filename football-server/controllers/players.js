@@ -6,7 +6,13 @@ const Player = db.players;
 
 //get all players
 export const getPlayers = (req, res) => {
-  Player.findAll()
+  Player.findAll({
+    include: [
+      {
+        model: db.teams,
+      },
+    ],
+  })
     .then((players) => {
       res.status(200).json({ players: players });
     })

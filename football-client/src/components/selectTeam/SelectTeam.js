@@ -37,6 +37,7 @@ export const SelectTeam = () => {
       <FormControl sx={{ m: 1, width: 250 }}>
         <InputLabel id="select-country">Country</InputLabel>
         <Select
+          data-testid="select-country"
           labelId="select-country"
           id="select-country-options"
           value={activeCountry}
@@ -56,6 +57,7 @@ export const SelectTeam = () => {
         <Select
           labelId="select-team"
           id="select-team-options"
+          data-testid="select-team"
           value={activeTeam.name || ""}
           label="Team"
           onChange={handleTeamChange}
